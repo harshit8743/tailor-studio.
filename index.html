@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TailorDesk — Shop Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">✂</div><div><b>TailorDesk</b><small>ATELIER MANAGEMENT</small></div></div>
+    <div class="shop-label">WORKSPACE</div>
+    <nav id="nav">
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-item" data-page="orders"><span>▤</span> Orders <em id="navOrderCount">0</em></button>
+      <button class="nav-item" data-page="customers"><span>♙</span> Customers</button>
+      <button class="nav-item" data-page="measurements"><span>⌁</span> Measurements</button>
+      <button class="nav-item" data-page="calendar"><span>▦</span> Trials & delivery</button>
+      <button class="nav-item" data-page="payments"><span>₹</span> Payments</button>
+      <button class="nav-item" data-page="reports"><span>▥</span> Reports</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="help-card"><b>Need a hand?</b><p>Keep every fitting and deadline in one place.</p><span>TailorDesk workspace</span></div><div class="profile"><div class="avatar">TD</div><div><b>Shop Admin</b><small>Administrator</small></div><span class="dots">•••</span></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><button class="mobile-menu" id="menuBtn">☰</button><div class="crumb">Workspace <span>/</span> <b id="pageCrumb">Dashboard</b></div><div class="top-actions"><span class="today" id="today"></span><button class="icon-btn" title="Notifications">♧</button><button class="primary-btn" id="topNewOrder">＋ New order</button></div></header>
+    <section class="content">
+      <div id="page-dashboard" class="page active">
+        <div class="welcome-row"><div><div class="eyebrow">YOUR ATELIER AT A GLANCE</div><h1>Good work starts with a clear plan.</h1><p class="muted">Here’s what’s happening in your shop today.</p></div><button class="primary-btn" id="dashNewOrder">＋ Create order</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Active orders</span><span class="stat-icon lilac">▤</span></div><strong id="statActive">0</strong><small>Orders in progress</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Due this week</span><span class="stat-icon amber">◷</span></div><strong id="statDue">0</strong><small>Trial or delivery dates</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Pending balance</span><span class="stat-icon mint">₹</span></div><strong id="statBalance">₹0</strong><small>Amount yet to collect</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Completed orders</span><span class="stat-icon blue">✓</span></div><strong id="statComplete">0</strong><small>Ready / delivered</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <section class="panel"><div class="panel-heading"><div><h2>Recent orders</h2><p class="muted">Your latest customer work</p></div><button class="text-btn" data-goto="orders">View all →</button></div><div class="table-wrap"><table><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>ITEM</th><th>DUE DATE</th><th>STATUS</th></tr></thead><tbody id="recentOrders"></tbody></table></div></section>
+          <section class="panel agenda"><div class="panel-heading"><div><h2>Upcoming schedule</h2><p class="muted">Trials and delivery commitments</p></div><span class="calendar-icon">▦</span></div><div id="upcomingList" class="upcoming-list"></div></section>
+        </div>
+        <section class="panel quick-panel"><div><h2>Quick actions</h2><p class="muted">Get common tasks done faster.</p></div><div class="quick-actions"><button data-action="order"><span>＋</span><b>New order</b><small>Register customer work</small></button><button data-goto="customers"><span>♙</span><b>Add customer</b><small>Build your customer book</small></button><button data-goto="measurements"><span>⌁</span><b>Measurements</b><small>Review saved sizes</small></button><button data-goto="calendar"><span>◷</span><b>Schedule</b><small>Check trials and delivery</small></button></div></section>
+      </div>
+      <div id="page-orders" class="page">
+        <div class="page-heading"><div><div class="eyebrow">WORK TRACKER</div><h1>Orders</h1><p class="muted">Track every garment from booking to delivery.</p></div><button class="primary-btn" data-action="order">＋ New order</button></div>
+        <div class="toolbar"><input id="orderSearch" placeholder="Search order, customer or garment…"><select id="statusFilter"><option value="">All statuses</option><option>New</option><option>In progress</option><option>Trial scheduled</option><option>Ready</option><option>Delivered</option></select></div>
+        <section class="panel"><div class="table-wrap"><table><thead><tr><th>ORDER ID</th><th>CUSTOMER</th><th>GARMENT</th><th>TRIAL</th><th>DELIVERY</th><th>AMOUNT</th><th>STATUS</th><th></th></tr></thead><tbody id="ordersTable"></tbody></table></div><div id="emptyOrders" class="empty-state" hidden>No orders yet. Create your first order to get started.</div></section>
+      </div>
+      <div id="page-customers" class="page">
+        <div class="page-heading"><div><div class="eyebrow">CUSTOMER BOOK</div><h1>Customers</h1><p class="muted">Contact details and customer order history.</p></div><button class="primary-btn" id="addCustomerBtn">＋ Add customer</button></div>
+        <div class="toolbar"><input id="customerSearch" placeholder="Search customers…"></div><section class="panel"><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>PHONE</th><th>ORDERS</th><th>LAST GARMENT</th><th></th></tr></thead><tbody id="customersTable"></tbody></table></div><div id="emptyCustomers" class="empty-state" hidden>No customers saved yet.</div></section>
+      </div>
+      <div id="page-measurements" class="page">
+        <div class="page-heading"><div><div class="eyebrow">FIT PROFILE</div><h1>Measurements</h1><p class="muted">Saved measurements linked to each customer’s orders.</p></div></div>
+        <section class="panel"><div class="table-wrap"><table><thead><tr><th>CUSTOMER</th><th>CHEST / BUST</th><th>WAIST</th><th>HIP</th><th>SHOULDER</th><th>SLEEVE</th><th>UNIT</th></tr></thead><tbody id="measurementsTable"></tbody></table></div><div id="emptyMeasurements" class="empty-state" hidden>Measurements appear here after you create an order.</div></section>
+        <p class="notice">Measurement tip: always confirm the unit and re-check critical measurements at fitting. These records are a working reference, not a substitute for a fresh fitting.</p>
+      </div>
+      <div id="page-calendar" class="page">
+        <div class="page-heading"><div><div class="eyebrow">TIME & COMMITMENTS</div><h1>Trials & delivery</h1><p class="muted">See the next fitting appointments and promised handovers.</p></div></div>
+        <div class="stats-grid two"><article class="stat-card"><div class="stat-top"><span>Upcoming trials</span><span class="stat-icon amber">◷</span></div><strong id="trialCount">0</strong><small>Scheduled appointments</small></article><article class="stat-card"><div class="stat-top"><span>Upcoming deliveries</span><span class="stat-icon mint">♧</span></div><strong id="deliveryCount">0</strong><small>Open commitments</small></article></div>
+        <section class="panel"><h2>Schedule</h2><div id="scheduleList" class="schedule-list"></div></section>
+      </div>
+      <div id="page-payments" class="page">
+        <div class="page-heading"><div><div class="eyebrow">MONEY TRACKER</div><h1>Payments</h1><p class="muted">Keep advances, order totals and balances visible.</p></div></div>
+        <div class="stats-grid two"><article class="stat-card"><div class="stat-top"><span>Total order value</span><span class="stat-icon lilac">₹</span></div><strong id="totalValue">₹0</strong><small>Across all orders</small></article><article class="stat-card"><div class="stat-top"><span>Collected</span><span class="stat-icon mint">✓</span></div><strong id="totalPaid">₹0</strong><small>Recorded payments</small></article></div>
+        <section class="panel"><div class="table-wrap"><table><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>TOTAL</th><th>ADVANCE / PAID</th><th>BALANCE</th><th>PAYMENT</th></tr></thead><tbody id="paymentsTable"></tbody></table></div></section>
+      </div>
+      <div id="page-reports" class="page">
+        <div class="page-heading"><div><div class="eyebrow">BUSINESS OVERVIEW</div><h1>Reports</h1><p class="muted">A simple snapshot of shop performance.</p></div><button class="secondary-btn" id="exportBtn">↓ Export orders CSV</button></div>
+        <div class="stats-grid"><article class="stat-card"><span>Total customers</span><strong id="reportCustomers">0</strong><small>Unique customer records</small></article><article class="stat-card"><span>Total orders</span><strong id="reportOrders">0</strong><small>All registered work</small></article><article class="stat-card"><span>Revenue recorded</span><strong id="reportRevenue">₹0</strong><small>Payments received</small></article><article class="stat-card"><span>Outstanding</span><strong id="reportOutstanding">₹0</strong><small>Pending collection</small></article></div>
+        <section class="panel"><h2>Order status breakdown</h2><div id="statusBreakdown" class="breakdown"></div></section>
+        <p class="notice">This starter version calculates reports from data saved in this browser. For a real multi-device shop deployment, connect a secure shared database and user accounts.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="orderModal" hidden>
+ <div class="modal">
+  <div class="modal-head"><div><div class="eyebrow">NEW WORK ENTRY</div><h2>Create an order</h2><p class="muted">Customer, garment, fitting and delivery details.</p></div><button class="close-btn" data-close>×</button></div>
+  <form id="orderForm">
+   <div class="form-section"><h3>Customer details</h3><div class="form-grid"><label>Customer name *<input name="customer" required placeholder="e.g. Aanya Sharma"></label><label>Phone number<input name="phone" placeholder="+91…"></label><label>Garment / item *<input name="garment" required placeholder="e.g. Blouse, suit, trousers"></label><label>Quantity<input name="quantity" type="number" min="1" value="1"></label></div></div>
+   <div class="form-section"><h3>Fabric & design</h3><div class="form-grid"><label>Fabric details<input name="fabric" placeholder="Type, colour, quantity, source"></label><label>Design preferences<input name="design" placeholder="Neck, sleeves, collar, style…"></label><label class="full">Reference / special instructions<textarea name="notes" rows="2" placeholder="Reference image description, lining, buttons, alterations…"></textarea></label></div></div>
+   <div class="form-section"><h3>Measurements <small>(use one consistent unit)</small></h3><div class="form-grid measurements-grid">
+    <label>Chest / bust<input name="chest" type="number" step="0.1" placeholder="—"></label><label>Waist<input name="waist" type="number" step="0.1" placeholder="—"></label><label>Hip<input name="hip" type="number" step="0.1" placeholder="—"></label><label>Shoulder<input name="shoulder" type="number" step="0.1" placeholder="—"></label><label>Sleeve<input name="sleeve" type="number" step="0.1" placeholder="—"></label><label>Length<input name="length" type="number" step="0.1" placeholder="—"></label><label>Unit<select name="unit"><option>inches</option><option>cm</option></select></label>
+   </div></div>
+   <div class="form-section"><h3>Trial, delivery & payment</h3><div class="form-grid"><label>Trial date<input name="trial" type="date"></label><label>Delivery commitment *<input name="delivery" type="date" required></label><label>Order amount (₹)<input name="amount" type="number" min="0" step="0.01" value="0"></label><label>Advance paid (₹)<input name="paid" type="number" min="0" step="0.01" value="0"></label><label>Status<select name="status"><option>New</option><option>In progress</option><option>Trial scheduled</option><option>Ready</option><option>Delivered</option></select></label></div></div>
+   <div class="modal-actions"><button type="button" class="secondary-btn" data-close>Cancel</button><button type="submit" class="primary-btn">Save order</button></div>
+  </form>
+ </div>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body></html>
